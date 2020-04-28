@@ -1,0 +1,82 @@
+<?php
+if ($this->session->has('auth')) {
+    // Retrieve its value
+    $id = $this->session->get('auth', 'nama');
+    echo implode("",$id) . " ";
+    echo $this->tag->linkTo([
+        "/pengguna/logout",
+        "Logout",
+    ]);
+    ?>
+    <div>
+        <?php
+            echo $this->tag->linkTo([
+                "/inventaris/create",
+                "Tambah Inventaris",
+            ]);
+        ?>
+    </div>
+
+    <?php
+    if ($invens->count() > 0) {
+    ?>
+    <h3>Daftar Inventaris</h3>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>Nomor</th>
+                <th>Nama</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($invens as $inven) { ?>
+            <tr>
+                <td><?php echo $inven->id_inv; ?></td>
+                <td><?php echo $inven->nama_inv; ?></td>
+                <td><?php echo $inven->status_inv; ?></td>
+                <td>
+                    <?php
+                        echo $this->tag->linkTo([
+                            "/inventaris/edit/{$inven->id_inv}",
+                            "Edit",
+                        ]);
+                    ?>
+                    <?php
+                        echo $this->tag->linkTo([
+                            "/inventaris/delete/{$inven->id_inv}",
+                            "Delete",
+                        ]);
+                    ?>
+                </td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+    <?php
+    }
+}
+else {
+    ?>
+    <div style="margin-top: 15%">
+        <div class="text-center">
+            <div class="page-header">
+                <h1>Welcome to Lammas</h1>
+            </div>
+
+            <p>Already have an account? Login below!</p>
+            
+            <div class="container" style="width: 300px">
+                <?php
+                echo $this->tag->linkTo([
+                    "/login",
+                    "Login!", 
+                    'class' => 'btn btn-primary btn-lg btn-block'
+                ]);?>
+            </div>
+            
+            <p>Don't have one? <?php echo $this->tag->linkTo("signup", "Sign Up Here!");?></p>
+            <?php } ?>
+        </div>
+    </div>
