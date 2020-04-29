@@ -1,0 +1,51 @@
+<?php
+if ($this->session->has('mhs')) {
+    // Retrieve its value
+    $name = $this->session->get('nama');
+    echo implode("",$name) . " ";
+    echo $this->tag->linkTo([
+        "/pengguna/logout",
+        "Logout",
+    ]);
+    ?>
+    <div>
+        <?php
+            echo $this->tag->linkTo([
+                "/mahasiswa/requestInv",
+                "Pinjam Barang",
+            ]);
+        ?>
+    </div>
+
+    <?php
+    if ($invens->count() > 0) {
+    ?>
+    <h3>Daftar Barang Pinjaman</h3>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>Nomor</th>
+                <th>Nama Barang</th>
+                <th>Tanggal Pinjam</th>
+                <th>Keperluan</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($invens as $inven) { ?>
+            <tr>
+                <td><?php echo $inven->id; ?></td>
+                <td><?php echo $inven->nama_barang; ?></td>
+                <td><?php echo $inven->tanggal; ?></td>
+                <td><?php echo $inven->keperluan; ?></td>
+                <td><?php echo $inven->status; ?></td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+    <?php
+    }
+}else{
+    echo "Sorii, hanya " . $name . " yang bisa mengakses halaman ini :)";
+    header( "refresh:2;url=/" );
+}

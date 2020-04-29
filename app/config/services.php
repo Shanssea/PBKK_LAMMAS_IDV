@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Phalcon\Escaper;
 use Phalcon\Flash\Direct as Flash;
+use Phalcon\Flash\Session as FlashSession;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
@@ -91,6 +92,20 @@ $di->setShared('modelsMetadata', function () {
 });
 
 /**
+ * Start the session the first time some component request the session service
+ */
+$di->setShared('session', function () {
+    $session = new SessionManager();
+    $files = new SessionAdapter([
+        'savePath' => sys_get_temp_dir(),
+    ]);
+    $session->setAdapter($files);
+    $session->start();
+
+    return $session;
+});
+
+/**
  * Register the session flash service with the Twitter Bootstrap classes
  */
 $di->set('flash', function () {
@@ -108,15 +123,20 @@ $di->set('flash', function () {
 });
 
 /**
- * Start the session the first time some component request the session service
+ * Register the session flash service with the Twitter Bootstrap classes
  */
-$di->setShared('session', function () {
-    $session = new SessionManager();
-    $files = new SessionAdapter([
-        'savePath' => sys_get_temp_dir(),
+$di->set('flashSession', function () {
+    $escaper = new Escaper();
+    $flashSession = new FlashSession($escaper);
+    $flashSession->setImplicitFlush(false);
+    $flashSession->setCssClasses([
+        'error'   => 'alert alert-danger',
+        'success' => 'alert alert-success',
+        'notice'  => 'alert alert-info',
+        'warning' => 'alert alert-warning'
     ]);
-    $session->setAdapter($files);
-    $session->start();
 
-    return $session;
+    return $flashSession;
 });
+
+

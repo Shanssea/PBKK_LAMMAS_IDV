@@ -1,0 +1,24 @@
+<?php
+if ($this->session->has('isAdmin')) {
+    // Retrieve its value
+    $name = $this->session->get('nama');
+    echo $name;
+    echo $this->tag->linkTo([
+        "/pengguna/logout",
+        "Logout",
+    ]);
+    ?>
+    <div>
+        <?php
+            echo $this->tag->linkTo([
+                "/admin/createInv",
+                "Tambah Inventaris",
+            ]);
+        ?>
+    </div>
+    <!-- BUAT TABEL KONFIRMASI -->
+<?php
+}else{
+    echo "Sorii, hanya admin yang boleh mengakses halaman ini :)";
+    header( "refresh:2;url=/" );
+}

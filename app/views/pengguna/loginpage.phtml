@@ -4,7 +4,8 @@
             <img src="img/Lammas_Logo.png" style="width: 50px">
             Lammas
         </h4>
-
+        <!-- flashSession masih gabisa -->
+        <?php $this->flashSession->output() ?>
         <?php echo $this->tag->form("pengguna/login"); ?>
 
             <p>
@@ -26,5 +27,6 @@
             </p>
 
         </form>
+        <p class="text-center">Don't have one? <?php echo $this->tag->linkTo("signup", "Sign Up Here!");?></p>
     </div>
 </div>

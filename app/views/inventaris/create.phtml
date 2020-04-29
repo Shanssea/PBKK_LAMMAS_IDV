@@ -1,19 +1,29 @@
-<h2>Menambah Inventaris</h2>
+<?php
+if ($this->session->has('isAdmin')) {
+    ?>
+    <h2>Menambah Inventaris</h2>
 
-<?php echo $this->tag->form("inventaris/submit"); ?>
-    
-    <p>
-        <label for="nama">Nama</label>
-        <?php echo $this->tag->textField("nama"); ?>
-    </p>
+    <?php echo $this->tag->form("inventaris/submit"); ?>
+        
+        <p>
+            <label for="nama">Nama</label>
+            <?php echo $this->tag->textField("nama"); ?>
+        </p>
 
-    <p>
-        <label for="status">Status</label>
-        <?php echo $this->tag->textField("status"); ?>
-    </p>
+        <p>
+            <label for="status">Status</label>
+            <?php echo $this->tag->textField("status"); ?>
+        </p>
 
-    <p>
-        <?php echo $this->tag->submitButton("Submit"); ?>
-    </p>
+        <p>
+            <?php echo $this->tag->submitButton("Submit"); ?>
+        </p>
 
-</form>
+    </form>
+<?php 
+}else{
+    echo "Sorii, hanya admin yang boleh mengakses halaman ini :)";
+    header( "refresh:2;url=/" );
+}
+
+?>

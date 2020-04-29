@@ -6,13 +6,6 @@ $router = $di->getRouter();
 
 $router->handle($_SERVER['REQUEST_URI']);
 
-$router->add(
-    '/',
-    [
-        'controller' => 'pengguna',
-        'action' => 'logout',
-    ]
-);
 
 $router->add(
     '/login',
@@ -22,11 +15,21 @@ $router->add(
     ]
 );
 
-$router->addPut(
-    '/inventaris/edit/3',
+$router->add(
+    '/inventaris/edit/([0-9])/:params',
     [
         'controller' => 'inventaris',
         'action' => 'edit',
+        'invenId' => 1,
+    ]
+);
+
+$router->add(
+    '/mahasiswa/([0-9])/:params',
+    [
+        'controller' => 'mahasiswa',
+        'action' => 'index',
+        'userId' => 1,
     ]
 );
 
