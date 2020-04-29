@@ -5,9 +5,9 @@ class AdminController extends ControllerBase
 
     public function indexAction()
     {
-        $this->view->users = Pengguna::find();
-        $this->view->invens = Inventaris::find();
+
     }
+        
 
     public function createInvAction()
     {
@@ -15,6 +15,11 @@ class AdminController extends ControllerBase
                 'controller' => 'inventaris',
                 'action' => 'create',
             ]);
+    }
+
+    public function listInvAction()
+    {
+        $this->view->invens = Inventaris::find();
     }
 
 }

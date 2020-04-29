@@ -1,9 +1,9 @@
 <?php
-if ($this->session->has('isAdmin')) {
+if ($this->session->has('mhs')) {
     ?>
     <h2>Edit Inventaris</h2>
 
-    <?php echo $this->tag->form("inventaris/edit/".$invenId); ?>
+    <?php echo $this->tag->form("inventaris/request/".$id."/".$invenId); ?>
         
         <p>
             <label for="nama">Nama</label>
@@ -11,8 +11,8 @@ if ($this->session->has('isAdmin')) {
         </p>
 
         <p>
-            <label for="status">Status</label>
-            <?php echo $this->tag->textField(['status', 'value' => $status]); ?>
+            <label for="status">Keperluan</label>
+            <?php echo $this->tag->textField('keperluan'); ?>
         </p>
 
         <p>
@@ -23,7 +23,7 @@ if ($this->session->has('isAdmin')) {
     <div>
     <?php
         echo $this->tag->linkTo([
-            "/admin/listInv",
+            "/mahasiswa/".$id."/requestInv",
             "Kembali",
         ]);
     ?>

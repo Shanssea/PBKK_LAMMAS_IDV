@@ -20,6 +20,14 @@ if ($this->session->has('isAdmin')) {
         </p>
 
     </form>
+    <div>
+    <?php
+        echo $this->tag->linkTo([
+            "/admin",
+            "Kembali",
+        ]);
+    ?>
+</div>
 <?php 
 }else{
     echo "Sorii, hanya admin yang boleh mengakses halaman ini :)";

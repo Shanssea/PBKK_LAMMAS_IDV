@@ -19,5 +19,16 @@ class MahasiswaController extends ControllerBase
         $this->view->invens = Inventaris::find();
     }
 
+    public function createInvAction($id,$invenId)
+    {
+        return $this->dispatcher->forward(
+            [
+                'controller' => 'inventaris',
+                'action' => 'request',
+                'params' => [$id,$invenId],
+            ]
+        );
+    }
+
 }
 

@@ -1,4 +1,8 @@
-<h3>Daftar Inventaris</h3>
+<?php
+if($this->session->has('mhs')){
+    $id = $this->session->get('id');
+    ?>
+    <h3>Daftar Inventaris</h3>
     <table class="table table-bordered table-hover">
         <thead class="thead-light">
             <tr>
@@ -17,7 +21,7 @@
                 <td>
                     <?php
                         echo $this->tag->linkTo([
-                            "/inventaris/request/".$inven->id_inv,
+                            "/mahasiswa/createInv/". implode("",$id) . "/" . $inven->id_inv,
                             "Request",
                         ]);
                     ?>
@@ -26,3 +30,13 @@
         <?php } ?>
         </tbody>
     </table>
+    <div>
+    <?php
+        echo $this->tag->linkTo([
+            "/mahasiswa/". implode("",$id),
+            "Kembali",
+        ]);
+    ?>
+    </div> 
+    <?php
+}

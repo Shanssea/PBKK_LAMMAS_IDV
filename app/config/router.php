@@ -33,3 +33,22 @@ $router->add(
     ]
 );
 
+$router->add(
+    '/mahasiswa/([0-9])/:params/requestInv',
+    [
+        'controller' => 'mahasiswa',
+        'action' => 'requestInv',
+        'userId' => 1,
+    ]
+);
+
+$router->add(
+    '/mahasiswa/([0-9])/:params/inv/([0-9])/:params',
+    [
+        'controller' => 'mahasiswa',
+        'action' => 'createInv',
+        'userId' => 1,
+        'invenId' => 2,
+    ]
+);
+

@@ -2,6 +2,7 @@
 if ($this->session->has('mhs')) {
     // Retrieve its value
     $name = $this->session->get('nama');
+    $id = $this->session->get('id');
     echo implode("",$name) . " ";
     echo $this->tag->linkTo([
         "/pengguna/logout",
@@ -11,7 +12,7 @@ if ($this->session->has('mhs')) {
     <div>
         <?php
             echo $this->tag->linkTo([
-                "/mahasiswa/requestInv",
+                "/mahasiswa/".implode("",$id)."/requestInv",
                 "Pinjam Barang",
             ]);
         ?>
