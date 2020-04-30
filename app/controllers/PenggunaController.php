@@ -58,49 +58,33 @@ class PenggunaController extends \Phalcon\Mvc\Controller
                 // OK
                 $this->_registerSession($user);
 
-                // masih blom muncul
-                $this->flash->success('Berhasil :)'); 
-
-
                 if ($user->isAdmin){
-                    return $this->response->redirect('/admin');
+                    return $this->response->redirect('/admin/'.$user->isAdmin);
                 }else{
                     return $this->response->redirect("/mahasiswa/".$user->id_user);
                 }
-                // return $this->dispatcher->forward([
-                //     'controller' => 'index',
-                //     'action' => 'index',
-                // ]);
              }
              else {
                  // masih blom muncul
-                $this->flash->error(
+                $this->view->disable();
+                $this->flashSession->error(
                     'Kamu gagal :('
                 );
                 return $this->response->redirect('/login');
              }
          } else {
              // masih blom muncul
-             $this->flash->error(
+             $this->flashSession->error(
                  'NRP atau password salah'
              );
              return $this->response->redirect('/login');
-            //  return $this->dispatcher->forward([
-            //     'controller' => 'pengguna',
-            //     'action' => 'login',
-            // ]);
          }  
         }
      }
 
      public function logoutAction() { 
-      //   $this->session->remove('auth');
         $this->session->destroy();
         return $this->response->redirect('/');
-        // return $this->dispatcher->forward(array( 
-        //    'controller' => 'index',
-        //    'action' => 'index' 
-        // )); 
      }
 }
 

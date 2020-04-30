@@ -3,30 +3,50 @@
 class MahasiswaController extends ControllerBase
 {
 
+    /**
+     * DASHBOARD
+     */
+
     public function indexAction($id)
     {
-        $id = $this->dispatcher->getParam('userId');
+        $this->view->id = $id;
 
         $conditions = ['id' => $id];
-        $this->view->invens = DaftarPinjamInv::find(
+        $x = $this->view->pinjInvs = ListPinjamInv::find(
             [
-            'condition' => 'id_user=:id:',
-            'bind' => $condition
+                'id_user = (:id:)',
+                'bind' => $conditions,
             ]
         );
     }
 
-    public function requestInvAction()
+    /**
+     * INVENTARIS
+     */
+
+    public function listInvAction()
     {
-        $this->view->invens = Inventaris::find();
+        $this->view->pick("mahasiswa/requestInv");
+        $this->view->invens = ListInv::find();
     }
 
-    public function createInvAction($id,$invenId)
+    public function requestInvAction($id,$invenId)
     {
         return $this->dispatcher->forward(
             [
                 'controller' => 'inventaris',
                 'action' => 'request',
+                'params' => [$id,$invenId],
+            ]
+        );
+    }
+
+    public function cancelInvAction($id,$invenId)
+    {
+        return $this->dispatcher->forward(
+            [
+                'controller' => 'inventaris',
+                'action' => 'cancel',
                 'params' => [$id,$invenId],
             ]
         );

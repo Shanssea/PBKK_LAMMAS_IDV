@@ -1,6 +1,6 @@
 <?php
 
-class DaftarPinjamInv extends \Phalcon\Mvc\Model
+class ListInv extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -13,25 +13,19 @@ class DaftarPinjamInv extends \Phalcon\Mvc\Model
      *
      * @var integer
      */
-    public $id_user;
+    public $id_lab;
+
+    /**
+     *
+     * @var string
+     */
+    public $nama_lab;
 
     /**
      *
      * @var string
      */
     public $nama_barang;
-
-    /**
-     *
-     * @var string
-     */
-    public $tanggal;
-
-    /**
-     *
-     * @var string
-     */
-    public $keperluan;
 
     /**
      *
@@ -46,14 +40,14 @@ class DaftarPinjamInv extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("lammas");
-        $this->setSource("daftarPinjamanInv");
+        $this->setSource("daftarInv");
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return DaftarPinjamInv[]|DaftarPinjamInv|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return ListInv[]|ListInv|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null): \Phalcon\Mvc\Model\ResultsetInterface
     {
@@ -64,7 +58,7 @@ class DaftarPinjamInv extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return DaftarPinjamInv|\Phalcon\Mvc\Model\ResultInterface
+     * @return ListInv|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

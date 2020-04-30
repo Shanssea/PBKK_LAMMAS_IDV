@@ -1,47 +1,57 @@
-<h3>Daftar Inventaris</h3>
-<table class="table table-bordered table-hover">
-    <thead class="thead-light">
-        <tr>
-            <th>Nomor</th>
-            <th>Nama</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php
-    if ($invens->count() > 0) {
-        foreach ($invens as $inven) { ?>
-        <tr>
-            <td><?php echo $inven->id_inv; ?></td>
-            <td><?php echo $inven->nama_inv; ?></td>
-            <td><?php echo $inven->status_inv; ?></td>
-            <td>
-                <?php
-                    echo $this->tag->linkTo([
-                        "/inventaris/edit/".$inven->id_inv,
-                        "Edit",
-                    ]);
-                ?>
-                <?php
-                    echo $this->tag->linkTo([
-                        "/inventaris/delete/".$inven->id_inv,
-                        "Delete",
-                    ]);
-                ?>
-            </td>
-        </tr>
-    <?php } 
-    }else{
-        echo "Tidak ada barang :(";
-    } ?>
-    </tbody>
-</table>
-<div>
-    <?php
-        echo $this->tag->linkTo([
-            "/admin",
-            "Kembali",
-        ]);
+<?php
+if ($this->session->has('isAdmin')) {
+    // Retrieve its value
+    $id = $this->session->get('isAdmin');
     ?>
-</div>
+    <h3>Daftar Inventaris</h3>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>Nomor</th>
+                <th>Nama</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        if ($invens->count() > 0) {
+            foreach ($invens as $inven) { ?>
+            <tr>
+                <td><?php echo $inven->id_inv; ?></td>
+                <td><?php echo $inven->nama_inv; ?></td>
+                <td><?php echo $inven->status_inv; ?></td>
+                <td>
+                    <?php
+                        echo $this->tag->linkTo([
+                            "/admin/".implode("",$id)."/updateInv/".$inven->id_inv,
+                            "Edit",
+                        ]);
+                    ?>
+                    <?php
+                        echo $this->tag->linkTo([
+                            "/admin/".implode("",$id)."/deleteInv/".$inven->id_inv,
+                            "Delete",
+                        ]);
+                    ?>
+                </td>
+            </tr>
+        <?php } 
+        }else{ 
+            ?>
+            <tr>
+                <td colspan="5"><p class="text-center">Bersiihh, tidak ada barang~</p></td>
+            </tr>
+            <?php
+        } ?>
+        </tbody>
+    </table>
+    <div>
+        <?php
+            echo $this->tag->linkTo([
+                "/admin/".implode("",$id),
+                "Kembali",
+            ]);
+        ?>
+    </div>
+<?php } ?>

@@ -13,7 +13,19 @@ class PinjamInv extends \Phalcon\Mvc\Model
      *
      * @var integer
      */
+    public $id_user;
+
+    /**
+     *
+     * @var integer
+     */
     public $id_inv;
+
+    /**
+     *
+     * @var integer
+     */
+    public $id_lab;
 
     /**
      *

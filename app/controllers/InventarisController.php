@@ -2,14 +2,16 @@
 
 class InventarisController extends ControllerBase
 {
-    // functions untuk admin
+    /**
+     * ADMIN
+     */
 
-    public function createAction()
+    public function createAction($id)
     {
         
     }
 
-    public function submitAction()
+    public function submitAction($id)
     {
         if($this->request->isPost())
         {
@@ -19,13 +21,13 @@ class InventarisController extends ControllerBase
 
             $inven->nama_inv = $dataSent["nama"];
             $inven->status_inv = $dataSent["status"];
+            $inven->id_lab = $id;
 
             $success = $inven->save();
         }
 
         if ($success) {
-            echo "Berhasil!";
-            header("refresh:2;url=/admin/listInv");
+            return $this->response->redirect("/admin/".$id);
         } else {
             echo "Oops, seems like the following issues were encountered: ";
 
@@ -39,21 +41,24 @@ class InventarisController extends ControllerBase
         $this->view->disable();
     }
 
-    public function editAction($invenId)
+    public function updateAction($id,$invenId)
     {
+        $this->view->pick("inventaris/edit");
         // passing ke view
         $this->view->invenId = $invenId;
 
-        $conditions = ['id_inv' => $invenId];
-        $inven = Inventaris::findFirst([
-            'conditions' => 'id_inv=:id_inv:',
-            'bind' => $conditions,
-        ]);
+        $conditions = ['id_lab' => $id,'id_inv' => $invenId];
+        $inven = Inventaris::findFirst(
+            [
+                'conditions' => 'id_inv = (:id_inv:) AND id_lab = (:id_lab:)',
+                'bind' => $conditions,
+            ]
+        );
 
         $this->view->setVars(
             [
-                'nama' => $inven->nama_inv,
-                'status' => $inven->status_inv,
+                'nama_inv' => $inven->nama_inv,
+                'status_inv' => $inven->status_inv,
             ]
         );
 
@@ -62,14 +67,14 @@ class InventarisController extends ControllerBase
 
             $dataSent = $this->request->get();
 
-            $nama = $dataSent["nama"];
-            $status = $dataSent["status"];
+            $inven->nama_inv = $dataSent["nama"];
+            $inven->status_inv = $dataSent["status"];
+            $inven->id_lab = $id;
 
             $success = $inven->save();
 
             if ($success) {
-                echo "Berhasil!";
-                header("refresh:2;url=/admin");
+                return $this->response->redirect("/admin/".$id);
             } else {
                 echo "Oops, seems like the following issues were encountered: ";
     
@@ -82,19 +87,20 @@ class InventarisController extends ControllerBase
         }
     }
 
-    public function deleteAction($invenId)
+    public function deleteAction($id,$invenId)
     {
-        $conditions = ['id_inv' => $invenId];
-        $inven = Inventaris::findFirst([
-            'conditions' => 'id_inv=:id_inv:',
-            'bind' => $conditions,
-        ]);
+        $conditions = ['id_lab' => $id,'id_inv' => $invenId];
+        $inven = Inventaris::findFirst(
+            [
+                'conditions' => 'id_inv = (:id_inv:) AND id_lab = (:id_lab:)',
+                'bind' => $conditions,
+            ]
+        );
 
         $success = $inven->delete();
 
         if ($success) {
-            echo "Berhasil!";
-            header("refresh:2;url=/admin");
+            return $this->response->redirect("/admin/".$id);
         } else {
             echo "Oops, seems like the following issues were encountered: ";
 
@@ -106,7 +112,72 @@ class InventarisController extends ControllerBase
         }
     }
 
-    // functions untuk mahasiswa
+    public function confirmAction($id,$pinjInvId)
+    {
+
+        $conditions1 = ['id' => $id, 'id_pinv' => $pinjInvId];
+        $pinjInv = PinjamInv::findFirst([
+            'conditions' => 'id_pinv = (:id_pinv:) AND id_lab = (:id:)',
+            'bind' => $conditions1,
+        ]);
+
+        $pinjInv->STATUS = 'approved';
+
+        $conditions2 = ['id' => $pinjInv->id_inv];
+        $inven = Inventaris::findFirst([
+            'conditions' => 'id_inv = (:id:)',
+            'bind' => $conditions2,
+        ]);
+
+        $inven->status_inv = 'unavailable';
+
+        $success = $pinjInv->save();
+        $inven->save();
+
+        if ($success) {
+            return $this->response->redirect('/admin/'.$id);
+        } else {
+            echo "Oops, seems like the following issues were encountered: ";
+
+            $messages = $inven->getMessages();
+
+            foreach ($messages as $message) {
+                echo $message->getMessage(), "<br/>";
+            }
+        }
+    
+    }
+
+    public function declineAction($id,$pinjInvId)
+    {
+
+        $conditions = ['id' => $id, 'id_pinv' => $pinjInvId];
+        $pinjInv = PinjamInv::findFirst([
+            'conditions' => 'id_pinv = (:id_pinv:) AND id_lab = (:id:)',
+            'bind' => $conditions,
+        ]);
+
+        $pinjInv->STATUS = "not approved";
+
+        $success = $pinjInv->save();
+
+        if ($success) {
+            return $this->response->redirect('/admin/'.$id);
+        } else {
+            echo "Oops, seems like the following issues were encountered: ";
+
+            $messages = $inven->getMessages();
+
+            foreach ($messages as $message) {
+                echo $message->getMessage(), "<br/>";
+            }
+        }
+    
+    }
+
+    /**
+     * MAHASISWA
+     */
 
     public function requestAction($id,$invenId)
     {
@@ -121,21 +192,25 @@ class InventarisController extends ControllerBase
 
         $this->view->setVars(
             [
-                'nama' => $inven->nama_inv,
+                'nama' => $inven->nama_inv
             ]
         );
 
         if ($this->request->isPost()) 
         {
-            $pinjamInv = new PinjamInv();
+            $pinjInv = new PinjamInv();
 
             $dataSent = $this->request->getPost();
 
-            $pinjamInv->id_user = $id;
-            $pinjamInv->id_inv = $invenId;
-            $pinjamInv->keperluan = $dataSent["keperluan"];
+            $pinjInv->id_user = $id;
+            $pinjInv->id_inv = $invenId;
+            $pinjInv->id_lab = $inven->id_lab;
+            $pinjInv->keperluan = $dataSent["keperluan"];
+            $pinjInv->tanggal = $dataSent["tanggal"];
 
-            $success = $pinjamInv->save();
+            // $newDate = date("d-m-Y", strtotime($orgDate));  
+
+            $success = $pinjInv->save();
 
             if ($success) {
                 echo "Berhasil!";
@@ -152,23 +227,21 @@ class InventarisController extends ControllerBase
         }
     }
 
-    public function confirmAction($id)
+    public function cancelAction($id,$pinjInvId)
     {
+        $this->view->pinjInvId = $pinjInvId;
 
-        $conditions = ['id' => $id];
+        $conditions = ['id_pinv' => $pinjInvId];
         $pinjInv = PinjamInv::findFirst([
-            'conditions' => 'id_pinv=:id:',
+            'conditions' => 'id_pinv=:id_pinv:',
             'bind' => $conditions,
         ]);
 
-        $pinjInv->STATUS = 'verified';
-
-        $success = $pinjInv->save();
+        $success = $pinjInv->delete();
 
         if ($success) {
             echo "Berhasil!";
-            header("refresh:2;url=/admin");
-            //return $this->response->redirect('/admin');
+            header("refresh:2;url=/mahasiswa/".$id);
         } else {
             echo "Oops, seems like the following issues were encountered: ";
 
@@ -178,7 +251,6 @@ class InventarisController extends ControllerBase
                 echo $message->getMessage(), "<br/>";
             }
         }
-    
     }
 
 }

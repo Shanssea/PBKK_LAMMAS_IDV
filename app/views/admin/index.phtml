@@ -1,7 +1,7 @@
 <?php
 if ($this->session->has('isAdmin')) {
-    // Retrieve its value
     $name = $this->session->get('nama');
+    $id = $this->session->get('isAdmin');
     echo implode("",$name) . " ";
     echo $this->tag->linkTo([
         "/pengguna/logout",
@@ -11,7 +11,7 @@ if ($this->session->has('isAdmin')) {
     <div>
         <?php
             echo $this->tag->linkTo([
-                "/admin/createInv",
+                "/admin/".implode("",$id)."/createInv",
                 "Tambah Inventaris",
             ]);
         ?>
@@ -19,7 +19,7 @@ if ($this->session->has('isAdmin')) {
     <div>
         <?php
             echo $this->tag->linkTo([
-                "/admin/listInv",
+                "/admin/".implode("",$id)."/listInv",
                 "Daftar Inventaris",
             ]);
         ?>
@@ -46,15 +46,23 @@ if ($this->session->has('isAdmin')) {
             <td>
                 <?php
                     echo $this->tag->linkTo([
-                        "/admin/confirmInv/".$pinjInv->id,
+                        "/admin/".implode("",$id)."/confirmInv/".$pinjInv->id,
                         "Konfirmasi",
+                    ]);
+                    echo $this->tag->linkTo([
+                        "/admin/".implode("",$id)."/declineInv/".$pinjInv->id,
+                        "Tolak",
                     ]);
                 ?>
             </td>
         </tr>
     <?php } 
-    }else{
-        echo "Tidak ada barang :(";
+    }else{ 
+        ?>
+        <tr>
+            <td colspan="5"><p class="text-center">Bersiihh, tidak ada request barang~</p></td>
+        </tr>
+        <?php
     } ?>
     </tbody>
 </table>

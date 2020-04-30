@@ -1,31 +1,61 @@
 <?php
 
-class Inventaris extends \Phalcon\Mvc\Model
+class ListPinjamInv extends \Phalcon\Mvc\Model
 {
 
     /**
      *
      * @var integer
      */
-    public $id_inv;
+    public $id;
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    public $nama_inv;
-
-    /**
-     *
-     * @var string
-     */
-    public $status_inv;
+    public $id_user;
 
     /**
      *
      * @var integer
      */
     public $id_lab;
+
+    /**
+     *
+     * @var string
+     */
+    public $nama;
+
+    /**
+     *
+     * @var string
+     */
+    public $nama_lab;
+
+    /**
+     *
+     * @var string
+     */
+    public $nama_barang;
+
+    /**
+     *
+     * @var string
+     */
+    public $tanggal;
+
+    /**
+     *
+     * @var string
+     */
+    public $keperluan;
+
+    /**
+     *
+     * @var string
+     */
+    public $status;
 
 
     /**
@@ -34,14 +64,14 @@ class Inventaris extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("lammas");
-        $this->setSource("inventaris");
+        $this->setSource("daftarPinjamanInv");
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Inventaris[]|Inventaris|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return ListPinjamInv[]|ListPinjamInv|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null): \Phalcon\Mvc\Model\ResultsetInterface
     {
@@ -52,7 +82,7 @@ class Inventaris extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Inventaris|\Phalcon\Mvc\Model\ResultInterface
+     * @return ListPinjamInv|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

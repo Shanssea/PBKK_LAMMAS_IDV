@@ -16,6 +16,11 @@ if ($this->session->has('mhs')) {
         </p>
 
         <p>
+            <label for="tanggal">Tanggal Pinjam</label>
+            <?php echo $this->tag->dateField('tanggal'); ?>
+        </p>
+
+        <p>
             <?php echo $this->tag->submitButton("Submit"); ?>
         </p>
 

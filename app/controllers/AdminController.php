@@ -2,39 +2,82 @@
 
 class AdminController extends ControllerBase
 {
+    
+    /**
+     * DASHBOARD
+     */
 
-    public function indexAction()
+    public function indexAction($id)
     {
         $status = "unverified";
-        $this->view->pinjInvs = DaftarPinjamInv::find(
+        $this->view->pinjInvs = ListPinjamInv::find(
             [
-                'status = (:status:)',
+                'status = (:status:) AND id_lab = (:id:)',
                 'bind' => [
-                    'status' => $status
+                    'id' => $id,
+                    'status' => $status,
                 ]
             ]
         );
     }
+
+    /**
+     * INVENTARIS
+     */
         
-    public function createInvAction()
+    public function createInvAction($id)
     {
         return $this->dispatcher->forward([
                 'controller' => 'inventaris',
                 'action' => 'create',
+                'params' => [$id]
             ]);
     }
 
-    public function listInvAction()
+    public function updateInvAction($id,$invenId)
     {
-        $this->view->invens = Inventaris::find();
+        return $this->dispatcher->forward([
+                'controller' => 'inventaris',
+                'action' => 'update',
+                'params' => [$id,$invenId],
+            ]);
     }
 
-    public function confirmInvAction($id)
+    public function deleteInvAction($id,$invenId)
+    {
+        return $this->dispatcher->forward([
+                'controller' => 'inventaris',
+                'action' => 'delete',
+                'params' => [$id,$invenId],
+            ]);
+    }
+
+    public function listInvAction($id)
+    {
+        $conditions = ['id' => $id];
+        $this->view->invens = Inventaris::find(
+            [
+                'conditions' => 'id_lab=:id:',
+                'bind' => $conditions,
+            ]
+        );
+    }
+
+    public function confirmInvAction($id,$pinjInvId)
     {
         return $this->dispatcher->forward([
             'controller' => 'inventaris',
             'action' => 'confirm',
-            'params' => $id
+            'params' => [$id,$pinjInvId],
+        ]);
+    }
+
+    public function declineInvAction($id,$pinjInvId)
+    {
+        return $this->dispatcher->forward([
+            'controller' => 'inventaris',
+            'action' => 'decline',
+            'params' => [$id,$pinjInvId],
         ]);
     }
 

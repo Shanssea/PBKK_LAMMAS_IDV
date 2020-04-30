@@ -1,18 +1,19 @@
 <?php
 if ($this->session->has('isAdmin')) {
+    $id = $this->session->get('isAdmin');
     ?>
     <h2>Edit Inventaris</h2>
 
-    <?php echo $this->tag->form("inventaris/edit/".$invenId); ?>
+    <?php echo $this->tag->form("inventaris/update/".implode("",$id)."/".$invenId); ?>
         
         <p>
             <label for="nama">Nama</label>
-            <?php echo $this->tag->textField(['nama', 'value' => $nama]); ?>
+            <?php echo $this->tag->textField(['nama', 'value' => $nama_inv]); ?>
         </p>
 
         <p>
             <label for="status">Status</label>
-            <?php echo $this->tag->textField(['status', 'value' => $status]); ?>
+            <?php echo $this->tag->textField(['status', 'value' => $status_inv]); ?>
         </p>
 
         <p>

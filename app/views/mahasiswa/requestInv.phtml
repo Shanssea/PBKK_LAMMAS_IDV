@@ -9,19 +9,21 @@ if($this->session->has('mhs')){
                 <th>Nomor</th>
                 <th>Nama</th>
                 <th>Status</th>
+                <th>Lab</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
         <?php foreach ($invens as $inven) { ?>
             <tr>
-                <td><?php echo $inven->id_inv; ?></td>
-                <td><?php echo $inven->nama_inv; ?></td>
-                <td><?php echo $inven->status_inv; ?></td>
+                <td><?php echo $inven->id; ?></td>
+                <td><?php echo $inven->nama_barang; ?></td>
+                <td><?php echo $inven->status; ?></td>
+                <td><?php echo $inven->nama_lab; ?></td>
                 <td>
                     <?php
                         echo $this->tag->linkTo([
-                            "/mahasiswa/createInv/". implode("",$id) . "/" . $inven->id_inv,
+                            "/mahasiswa/requestInv/". implode("",$id) . "/" . $inven->id,
                             "Request",
                         ]);
                     ?>

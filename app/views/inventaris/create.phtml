@@ -1,20 +1,19 @@
 <?php
 if ($this->session->has('isAdmin')) {
+    $id = $this->session->get('isAdmin')
     ?>
     <h2>Menambah Inventaris</h2>
 
-    <?php echo $this->tag->form("inventaris/submit"); ?>
+    <?php echo $this->tag->form("inventaris/submit/".implode("",$id)); ?>
         
         <p>
             <label for="nama">Nama</label>
             <?php echo $this->tag->textField("nama"); ?>
         </p>
-
         <p>
             <label for="status">Status</label>
             <?php echo $this->tag->textField("status"); ?>
         </p>
-
         <p>
             <?php echo $this->tag->submitButton("Submit"); ?>
         </p>
@@ -23,7 +22,7 @@ if ($this->session->has('isAdmin')) {
     <div>
     <?php
         echo $this->tag->linkTo([
-            "/admin",
+            "/admin/".implode("",$id),
             "Kembali",
         ]);
     ?>
