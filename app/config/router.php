@@ -52,3 +52,12 @@ $router->add(
     ]
 );
 
+$router->add(
+    '/admin/confirmInv/([0-9])/:params',
+    [
+        'controller' => 'inventaris',
+        'action' => 'confirm',
+        'invenId' => 1,
+    ]
+);
+

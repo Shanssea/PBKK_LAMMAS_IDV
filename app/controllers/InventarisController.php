@@ -152,9 +152,33 @@ class InventarisController extends ControllerBase
         }
     }
 
-    public function addrequestAction()
+    public function confirmAction($id)
     {
-        
+
+        $conditions = ['id' => $id];
+        $pinjInv = PinjamInv::findFirst([
+            'conditions' => 'id_pinv=:id:',
+            'bind' => $conditions,
+        ]);
+
+        $pinjInv->STATUS = 'verified';
+
+        $success = $pinjInv->save();
+
+        if ($success) {
+            echo "Berhasil!";
+            header("refresh:2;url=/admin");
+            //return $this->response->redirect('/admin');
+        } else {
+            echo "Oops, seems like the following issues were encountered: ";
+
+            $messages = $inven->getMessages();
+
+            foreach ($messages as $message) {
+                echo $message->getMessage(), "<br/>";
+            }
+        }
+    
     }
 
 }

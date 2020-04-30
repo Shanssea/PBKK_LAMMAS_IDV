@@ -8,10 +8,12 @@ class MahasiswaController extends ControllerBase
         $id = $this->dispatcher->getParam('userId');
 
         $conditions = ['id' => $id];
-        $this->view->invens = DaftarPinjamInv::find([
+        $this->view->invens = DaftarPinjamInv::find(
+            [
             'condition' => 'id_user=:id:',
             'bind' => $condition
-        ]);
+            ]
+        );
     }
 
     public function requestInvAction()

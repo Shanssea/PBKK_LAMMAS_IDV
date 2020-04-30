@@ -46,7 +46,7 @@ class DaftarPinjamInv extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("lammas");
-        $this->setSource("daftarPinjaman");
+        $this->setSource("daftarPinjamanInv");
     }
 
     /**
