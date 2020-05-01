@@ -3,13 +3,13 @@ if ($this->session->has('isAdmin')) {
     // Retrieve its value
     $id = implode("",$this->session->get('isAdmin'));
     ?>
-    <h3>Daftar Inventaris</h3>
+    <h3>Inventaris</h3>
     <table class="table table-bordered table-hover">
         <thead class="text-center thead-light">
             <tr>
-                <th>Nomor</th>
-                <th>Nama</th>
-                <th>Status</th>
+                <th style="width:10%">Nomor</th>
+                <th style="width:25%">Nama</th>
+                <th style="width:25%">Status</th>
                 <th>Action</th>
             </tr>
         </thead>
