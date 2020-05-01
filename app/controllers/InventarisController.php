@@ -8,7 +8,8 @@ class InventarisController extends ControllerBase
 
     public function createAction($id)
     {
-        
+        $this->view->setTemplateAfter('admin');
+        $this->view->id->$id;
     }
 
     public function submitAction($id)
@@ -43,7 +44,9 @@ class InventarisController extends ControllerBase
 
     public function updateAction($id,$invenId)
     {
+        $this->view->setTemplateAfter('admin');
         $this->view->pick("inventaris/edit");
+        $this->view->id->$id;
         // passing ke view
         $this->view->invenId = $invenId;
 
@@ -181,6 +184,7 @@ class InventarisController extends ControllerBase
 
     public function requestAction($id,$invenId)
     {
+        $this->view->setTemplateAfter('mahasiswa');
         $this->view->id = $id;
         $this->view->invenId = $invenId;
 
@@ -213,8 +217,7 @@ class InventarisController extends ControllerBase
             $success = $pinjInv->save();
 
             if ($success) {
-                echo "Berhasil!";
-                header("refresh:2;url=/mahasiswa/".$id."/requestInv");
+                return $this->response->redirect("/mahasiswa/".$id);
             } else {
                 echo "Oops, seems like the following issues were encountered: ";
     
@@ -240,8 +243,7 @@ class InventarisController extends ControllerBase
         $success = $pinjInv->delete();
 
         if ($success) {
-            echo "Berhasil!";
-            header("refresh:2;url=/mahasiswa/".$id);
+            return $this->response->redirect("/mahasiswa/".$id);
         } else {
             echo "Oops, seems like the following issues were encountered: ";
 

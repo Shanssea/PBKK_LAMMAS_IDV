@@ -116,10 +116,11 @@ $router->add(
 );
 
 $router->add(
-    '/mahasiswa/([0-9])/listInv',
+    '/mahasiswa/([0-9])/listInv/:params',
     [
         'controller' => 'mahasiswa',
-        'action' => 'listInv'
+        'action' => 'listInv',
+        'userId' => 1,
     ]
 );
 

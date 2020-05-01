@@ -16,7 +16,7 @@ if($this->session->has('mhs')){
         <tbody>
         <?php foreach ($invens as $inven) { ?>
             <tr>
-                <td><?php echo $inven->id; ?></td>
+                <td class="counterCell"></td>
                 <td><?php echo $inven->nama_barang; ?></td>
                 <td><?php echo $inven->status; ?></td>
                 <td><?php echo $inven->nama_lab; ?></td>
@@ -25,6 +25,7 @@ if($this->session->has('mhs')){
                         echo $this->tag->linkTo([
                             "/mahasiswa/requestInv/". implode("",$id) . "/" . $inven->id,
                             "Request",
+                            'class' => 'btn btn-primary btn-block'
                         ]);
                     ?>
                 </td>
@@ -32,13 +33,5 @@ if($this->session->has('mhs')){
         <?php } ?>
         </tbody>
     </table>
-    <div>
-    <?php
-        echo $this->tag->linkTo([
-            "/mahasiswa/". implode("",$id),
-            "Kembali",
-        ]);
-    ?>
-    </div> 
     <?php
 }

@@ -1,11 +1,11 @@
 <?php
 if ($this->session->has('isAdmin')) {
     // Retrieve its value
-    $id = $this->session->get('isAdmin');
+    $id = implode("",$this->session->get('isAdmin'));
     ?>
     <h3>Daftar Inventaris</h3>
     <table class="table table-bordered table-hover">
-        <thead class="thead-light">
+        <thead class="text-center thead-light">
             <tr>
                 <th>Nomor</th>
                 <th>Nama</th>
@@ -18,22 +18,28 @@ if ($this->session->has('isAdmin')) {
         if ($invens->count() > 0) {
             foreach ($invens as $inven) { ?>
             <tr>
-                <td><?php echo $inven->id_inv; ?></td>
+                <td class="counterCell"></td>
                 <td><?php echo $inven->nama_inv; ?></td>
                 <td><?php echo $inven->status_inv; ?></td>
                 <td>
-                    <?php
-                        echo $this->tag->linkTo([
-                            "/admin/".implode("",$id)."/updateInv/".$inven->id_inv,
-                            "Edit",
-                        ]);
-                    ?>
-                    <?php
-                        echo $this->tag->linkTo([
-                            "/admin/".implode("",$id)."/deleteInv/".$inven->id_inv,
-                            "Delete",
-                        ]);
-                    ?>
+                    <div class="d-flex justify-content-around">
+                        <?php
+                            echo $this->tag->linkTo([
+                                "/admin/".$id."/updateInv/".$inven->id_inv,
+                                "Edit",
+                                'class' => 'btn btn-success',
+                                'style' => 'width:110px'
+                            ]);
+                        ?>
+                        <?php
+                            echo $this->tag->linkTo([
+                                "/admin/".$id."/deleteInv/".$inven->id_inv,
+                                "Delete",
+                                'class' => 'btn btn-danger',
+                                'style' => 'width:110px'
+                            ]);
+                        ?>
+                    </div>
                 </td>
             </tr>
         <?php } 
@@ -46,12 +52,4 @@ if ($this->session->has('isAdmin')) {
         } ?>
         </tbody>
     </table>
-    <div>
-        <?php
-            echo $this->tag->linkTo([
-                "/admin/".implode("",$id),
-                "Kembali",
-            ]);
-        ?>
-    </div>
 <?php } ?>

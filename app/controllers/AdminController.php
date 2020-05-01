@@ -9,6 +9,8 @@ class AdminController extends ControllerBase
 
     public function indexAction($id)
     {
+        // $this->view->setTemplateAfter('admin');
+        $this->view->id->$id;
         $status = "unverified";
         $this->view->pinjInvs = ListPinjamInv::find(
             [
@@ -27,6 +29,7 @@ class AdminController extends ControllerBase
         
     public function createInvAction($id)
     {
+        $this->view->id->$id;
         return $this->dispatcher->forward([
                 'controller' => 'inventaris',
                 'action' => 'create',
@@ -36,6 +39,7 @@ class AdminController extends ControllerBase
 
     public function updateInvAction($id,$invenId)
     {
+        $this->view->id->$id;
         return $this->dispatcher->forward([
                 'controller' => 'inventaris',
                 'action' => 'update',
@@ -54,6 +58,7 @@ class AdminController extends ControllerBase
 
     public function listInvAction($id)
     {
+        $this->view->id->$id;
         $conditions = ['id' => $id];
         $this->view->invens = Inventaris::find(
             [

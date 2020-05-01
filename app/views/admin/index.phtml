@@ -1,32 +1,12 @@
 <?php
 if ($this->session->has('isAdmin')) {
     $name = $this->session->get('nama');
-    $id = $this->session->get('isAdmin');
-    echo implode("",$name) . " ";
-    echo $this->tag->linkTo([
-        "/pengguna/logout",
-        "Logout",
-    ]);
+    $id = implode("",$this->session->get('isAdmin'));
     ?>
-    <div>
-        <?php
-            echo $this->tag->linkTo([
-                "/admin/".implode("",$id)."/createInv",
-                "Tambah Inventaris",
-            ]);
-        ?>
-    </div>
-    <div>
-        <?php
-            echo $this->tag->linkTo([
-                "/admin/".implode("",$id)."/listInv",
-                "Daftar Inventaris",
-            ]);
-        ?>
-    </div>
+    <h3>Barang Pinjaman</h3>
     <table class="table table-bordered table-hover">
     <thead class="thead-light">
-        <tr>
+        <tr class="text-center">
             <th>Nomor</th>
             <th>Nama</th>
             <th>Nama Barang</th>
@@ -39,21 +19,27 @@ if ($this->session->has('isAdmin')) {
     if ($pinjInvs->count() > 0) {
         foreach ($pinjInvs as $pinjInv) { ?>
         <tr>
-            <td><?php echo $pinjInv->id; ?></td>
+            <td class="counterCell"></td>
             <td><?php echo $pinjInv->nama; ?></td>
             <td><?php echo $pinjInv->nama_barang; ?></td>
             <td><?php echo $pinjInv->status; ?></td>
             <td>
-                <?php
-                    echo $this->tag->linkTo([
-                        "/admin/".implode("",$id)."/confirmInv/".$pinjInv->id,
-                        "Konfirmasi",
-                    ]);
-                    echo $this->tag->linkTo([
-                        "/admin/".implode("",$id)."/declineInv/".$pinjInv->id,
-                        "Tolak",
-                    ]);
-                ?>
+                <div class="d-flex justify-content-around">
+                    <?php
+                        echo $this->tag->linkTo([
+                            "/admin/".$id."/confirmInv/".$pinjInv->id,
+                            "Konfirmasi",
+                            'class' => 'btn btn-success',
+                            'style' => 'width:110px'
+                        ]);
+                        echo $this->tag->linkTo([
+                            "/admin/".$id."/declineInv/".$pinjInv->id,
+                            "Tolak",
+                            'class' => 'btn btn-danger',
+                            'style' => 'width:110px'
+                        ]);
+                    ?>
+                </div>
             </td>
         </tr>
     <?php } 

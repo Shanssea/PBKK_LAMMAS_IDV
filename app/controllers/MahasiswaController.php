@@ -24,8 +24,9 @@ class MahasiswaController extends ControllerBase
      * INVENTARIS
      */
 
-    public function listInvAction()
+    public function listInvAction($id)
     {
+        $this->view->id = $id;
         $this->view->pick("mahasiswa/requestInv");
         $this->view->invens = ListInv::find();
     }

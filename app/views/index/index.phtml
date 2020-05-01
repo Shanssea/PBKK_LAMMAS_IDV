@@ -9,13 +9,19 @@
         
         <div class="container" style="width: 300px">
             <?php
-            echo $this->tag->linkTo([
-                "/login",
-                "Login!", 
-                'class' => 'btn btn-primary btn-lg btn-block'
-            ]);?>
+            echo $this->tag->linkTo(
+                [
+                    "/login",
+                    "Login!", 
+                    'class' => 'btn btn-primary btn-lg btn-block'
+                ]);?>
         </div>
         
-        <p>Don't have one? <?php echo $this->tag->linkTo("signup", "Sign Up Here!");?></p>
+        <p>Don't have one? <?php echo $this->tag->linkTo(
+            [
+                "signup", 
+                "Sign Up Here!",
+                'style' => 'color:red' 
+            ]);?></p>
     </div>
 </div>
